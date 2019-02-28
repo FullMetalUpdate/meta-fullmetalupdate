@@ -1,0 +1,27 @@
+From 2771b7f318787ff1473a1c55522c449418e8d1b9 Mon Sep 17 00:00:00 2001
+From: cvincent <cvincent@witekio.com>
+Date: Fri, 2 Nov 2018 13:13:53 -0700
+Subject: [PATCH] Remove check for sym links
+
+---
+ libcontainer/configs/validate/validator.go | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/libcontainer/configs/validate/validator.go b/libcontainer/configs/validate/validator.go
+index cbbba9a0..584fa5de 100644
+--- a/src/import/libcontainer/configs/validate/validator.go
++++ b/src/import/libcontainer/configs/validate/validator.go
+@@ -68,9 +68,7 @@ func (v *ConfigValidator) rootfs(config *configs.Config) error {
+ 	if cleaned, err = filepath.EvalSymlinks(cleaned); err != nil {
+ 		return err
+ 	}
+-	if filepath.Clean(config.Rootfs) != cleaned {
+-		return fmt.Errorf("%s is not an absolute path or is a symlink", config.Rootfs)
+-	}
++
+ 	return nil
+ }
+ 
+-- 
+2.19.1
+
