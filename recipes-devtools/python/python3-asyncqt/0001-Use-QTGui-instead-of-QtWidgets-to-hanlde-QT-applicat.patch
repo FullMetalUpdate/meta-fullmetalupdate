@@ -1,0 +1,27 @@
+From 92be130bf3f98b54351e5d08c51ea2dbaaffc0af Mon Sep 17 00:00:00 2001
+From: cvincent <cvincent@witekio.com>
+Date: Tue, 12 Feb 2019 10:59:28 -0800
+Subject: [PATCH] Use QTGui instead of QtWidgets to hanlde QT applications
+
+---
+ asyncqt/__init__.py | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/asyncqt/__init__.py b/asyncqt/__init__.py
+index b42d6ac..78e1081 100644
+--- a/asyncqt/__init__.py
++++ b/asyncqt/__init__.py
+@@ -55,9 +55,8 @@ logger.info('Using Qt Implementation: {}'.format(QtModuleName))
+ QtCore = importlib.import_module(QtModuleName + '.QtCore', package=QtModuleName)
+ QtGui = importlib.import_module(QtModuleName + '.QtGui', package=QtModuleName)
+ if QtModuleName == 'PyQt5':
+-    from PyQt5 import QtWidgets
+     from PyQt5.QtCore import pyqtSlot as Slot
+-    QApplication = QtWidgets.QApplication
++    QApplication = QtGui.QGuiApplication
+ elif QtModuleName == 'PySide2':
+     from PySide2 import QtWidgets
+     from PySide2.QtCore import Slot
+-- 
+2.19.1
+
