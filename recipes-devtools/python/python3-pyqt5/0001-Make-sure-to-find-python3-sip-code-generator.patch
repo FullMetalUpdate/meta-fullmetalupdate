@@ -1,0 +1,25 @@
+From a9e638d320197329140c89635a913da72f7facf6 Mon Sep 17 00:00:00 2001
+From: cvincent <cvincent@witekio.com>
+Date: Mon, 11 Feb 2019 12:58:58 -0800
+Subject: [PATCH] Make sure to find python3 sip code generator
+
+---
+ configure.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.py b/configure.py
+index 074f2f0..9df6605 100644
+--- a/configure.py
++++ b/configure.py
+@@ -536,7 +536,7 @@ class TargetConfiguration:
+         self.qtconf_prefix = ''
+         self.qt_shared = False
+         self.qt_version = 0
+-        self.sip = self._find_exe('sip5', 'sip')
++        self.sip = self._find_exe('sip3')
+         self.sip_inc_dir = ''
+         self.static = False
+         self.sysroot = ''
+-- 
+2.19.1
+
