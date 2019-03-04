@@ -2,6 +2,10 @@ python __anonymous() {
     import configparser
     import os
 
+    ostree_repo = d.getVar('OSTREE_REPO')
+    if not ostree_repo:
+        bb.fatal("OSTREE_REPO should be set in your local.conf")
+
     config_file = d.getVar('HAWKBIT_CONFIG_FILE')
     if not config_file:
         bb.fatal("Please export/define HAWKBIT_CONFIG_FILE")

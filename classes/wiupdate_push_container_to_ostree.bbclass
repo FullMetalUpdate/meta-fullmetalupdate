@@ -5,9 +5,6 @@ export OSTREE_PACKAGE_BRANCHNAME = "${PN}"
 export OSTREE_REPO_CONTAINERS = "${DEPLOY_DIR_IMAGE}/ostree_repo_containers"
 
 do_push_container_to_ostree_and_hawkbit() {
-    if [ -z "$OSTREE_REPO" ]; then
-        bbfatal "OSTREE_REPO should be set in your local.conf"
-    fi
 
     if [ -z "$OSTREE_PACKAGE_BRANCHNAME" ]; then
         bbfatal "OSTREE_PACKAGE_BRANCHNAME should be set in your local.conf"
