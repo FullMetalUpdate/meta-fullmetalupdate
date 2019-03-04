@@ -1,3 +1,5 @@
+inherit fullmetalupdate
+
 LICENSE ?= "MIT"
 
 PREINSTALLED_CONTAINERS_LIST ?= ""
@@ -35,31 +37,15 @@ do_initialize_ostree_containers() {
 
 do_create_containers_package() {
 
-    if [ ! -e "${HAWKBIT_CONFIG_FILE}" ]; then
-      bbfatal "config.cfg is missing in the TMP directory. It should never   \
-      happen, are you using the docker container to build the images? If not \
-      you need to create manually the config.cfg. Check how it's done by the \
-      container_run.sh script."
-    else
-        CFG_CONTENT=$(cat ${HAWKBIT_CONFIG_FILE} | sed -r '/[^=]+=[^=]+/!d' | sed -r 's/\s+=\s/=/g' | sed -r '/gpg-verify+/d')
-        eval "$CFG_CONTENT"
-    fi
-
-    if [ "$ostree_ssl" = "true" ]; then
-        export url_type_ostree="https://"
-    else
-        export url_type_ostree="http://"
-    fi
-
     for container in ${PREINSTALLED_CONTAINERS_LIST}; do
-        bbnote "Add a local remote on the local Docker network for ostree : ${container} ${url_type_ostree}${OSTREE_HOSTNAME}':'${ostree_url_port} "
-        ostree remote add --no-gpg-verify ${container} ${url_type_ostree}${OSTREE_HOSTNAME}':'${ostree_url_port}  --repo=${IMAGE_ROOTFS}/ostree_repo
+        bbnote "Add a local remote on the local Docker network for ostree : ${container} ${OSTREE_HTTP_ADDRESS} "
+        ostree remote add --no-gpg-verify ${container} ${OSTREE_HTTP_ADDRESS} --repo=${IMAGE_ROOTFS}/ostree_repo
         bbnote "Pull the container: ${container} from the repo"
         ostree pull ${container} ${container} --repo=${IMAGE_ROOTFS}/ostree_repo 
         bbnote "Delete the remote on the local docker network from the repo"
         ostree remote delete ${container} --repo=${IMAGE_ROOTFS}/ostree_repo 
-        bbnote "Add a distant remote for ostree : ${server_host_name}'.local:'${ostree_url_port}"
-        ostree remote add --no-gpg-verify ${container} ${server_host_name}'.local:'${ostree_url_port} --repo=${IMAGE_ROOTFS}/ostree_repo
+        bbnote "Add a distant remote for ostree : ${OSTREE_HTTP_DISTANT_ADDRESS}"
+        ostree remote add --no-gpg-verify ${container} ${OSTREE_HTTP_DISTANT_ADDRESS} --repo=${IMAGE_ROOTFS}/ostree_repo
         echo ${container} >> ${IMAGE_ROOTFS}/${IMAGE_NAME}-containers.manifest
     done
 
