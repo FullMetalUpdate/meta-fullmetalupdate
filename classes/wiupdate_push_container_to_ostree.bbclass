@@ -43,7 +43,7 @@ do_push_container_to_ostree_and_hawkbit() {
     ostree_push ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}
 
     # Post the newly created container information to hawkbit
-    OSTREE_REVPARSE=$(ostree rev-parse ${OSTREE_PACKAGE_BRANCHNAME} --repo=${OSTREE_REPO_CONTAINERS}| head)
+    OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME})
     # Push the container information to Hawkbit
     json=$(curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
     "vendor" : "'${HAWKBIT_VENDOR_NAME}'",

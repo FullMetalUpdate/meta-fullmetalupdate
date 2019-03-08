@@ -67,3 +67,10 @@ ostree_push() {
     bbnote "Push the build result to the remote OSTREE"
     sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO} ${OSTREE_SSH_ADDRESS} ${OSTREE_BRANCH}
 }
+
+ostree_revparse() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+
+    ostree rev-parse ${OSTREE_BRANCH} --repo=${OSTREE_REPO} | head
+}

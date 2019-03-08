@@ -30,7 +30,7 @@ do_pull_remote_ostree_image() {
 do_push_image_to_hawkbit_and_ostree() {
     ostree_push ${OSTREE_REPO} ${OSTREE_BRANCHNAME}
 
-    OSTREE_REVPARSE=$(ostree rev-parse ${OSTREE_BRANCHNAME} --repo=${OSTREE_REPO}| head)
+    OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO} ${OSTREE_BRANCHNAME})
     json=$(curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
     "vendor" : "'${vendor_name}'",
     "name" : "'${OSTREE_BRANCHNAME}'-'${MACHINE}'",
