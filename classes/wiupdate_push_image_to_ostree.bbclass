@@ -4,10 +4,7 @@ do_push_image_to_hawkbit_and_ostree[recrdeptask] = "do_pull_remote_ostree_image"
 
 do_pull_remote_ostree_image() {
 
-    #Initialize the ostree directory if needed
-    if [ ! -d ${OSTREE_REPO} ]; then
-        ostree_init ${OSTREE_REPO} archive-z2
-    fi
+    ostree_init_if_non_existent ${OSTREE_REPO} archive-z2
 
     # Add missing remotes
     if ! ostree_is_remote_present ${OSTREE_REPO} ${OSTREE_BRANCHNAME}; then

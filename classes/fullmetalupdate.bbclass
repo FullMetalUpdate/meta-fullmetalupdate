@@ -67,6 +67,15 @@ ostree_init() {
     ostree --repo=${OSTREE_REPO} init --mode=${OSTREE_REPO_MODE}
 }
 
+ostree_init_if_non_existent() {
+    local OSTREE_REPO="$1"
+    local OSTREE_REPO_MODE="$2"
+
+    if [ ! -d ${OSTREE_REPO} ]; then
+        ostree_init ${OSTREE_REPO} ${OSTREE_REPO_MODE}
+    fi
+}
+
 ostree_push() {
     local OSTREE_REPO="$1"
     local OSTREE_BRANCH="$2"

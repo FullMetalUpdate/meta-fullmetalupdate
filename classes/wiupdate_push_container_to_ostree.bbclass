@@ -10,9 +10,7 @@ do_push_container_to_ostree_and_hawkbit() {
         bbfatal "OSTREE_PACKAGE_BRANCHNAME should be set in your local.conf"
     fi
 
-    if [ ! -d ${OSTREE_REPO_CONTAINERS} ]; then
-        ostree_init ${OSTREE_REPO_CONTAINERS} archive-z2
-    fi
+    ostree_init_if_non_existent ${OSTREE_REPO_CONTAINERS} archive-z2
 
     # Add missing remotes
     if ! ostree_is_remote_present ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}; then
