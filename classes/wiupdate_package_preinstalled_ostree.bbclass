@@ -43,7 +43,7 @@ do_create_containers_package() {
         bbnote "Pull the container: ${container} from the repo"
         ostree_pull ${IMAGE_ROOTFS}/ostree_repo ${container}
         bbnote "Delete the remote on the local docker network from the repo"
-        ostree remote delete ${container} --repo=${IMAGE_ROOTFS}/ostree_repo 
+        ostree_remote_delete ${IMAGE_ROOTFS}/ostree_repo ${container}
         bbnote "Add a distant remote for ostree : ${OSTREE_HTTP_DISTANT_ADDRESS}"
         ostree_remote_add ${IMAGE_ROOTFS}/ostree_repo ${container} ${OSTREE_HTTP_DISTANT_ADDRESS}
         echo ${container} >> ${IMAGE_ROOTFS}/${IMAGE_NAME}-containers.manifest
