@@ -14,7 +14,8 @@ do_pull_remote_ostree_image() {
     
     if [ -z "$refs" ]; then
         bbnote "Add the remote for the container: ${OSTREE_BRANCHNAME}"
-        ostree remote add --no-gpg-verify ${OSTREE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS} --repo=${OSTREE_REPO}
+
+        ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
     else
         bbnote "The remote for the container: ${OSTREE_BRANCHNAME} already exists" 
     fi

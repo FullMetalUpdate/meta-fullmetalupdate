@@ -88,3 +88,11 @@ ostree_revparse() {
 
     ostree rev-parse ${OSTREE_BRANCH} --repo=${OSTREE_REPO} | head
 }
+
+ostree_remote_add() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+    local OSTREE_HTTP_ADDRESS="$3"
+
+    ostree remote add --no-gpg-verify ${OSTREE_BRANCH} ${OSTREE_HTTP_ADDRESS} --repo=${OSTREE_REPO}
+}
