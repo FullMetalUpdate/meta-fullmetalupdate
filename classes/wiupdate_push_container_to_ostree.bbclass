@@ -27,9 +27,9 @@ do_push_container_to_ostree_and_hawkbit() {
 
     #Pull locally the remote repo
     set +e
-    #Ignore error for this command, since the remote repo could be empy and we have no way to know
+    # Ignore error for this command, since the remote repo could be empty and we have no way to know
     bbnote "Pull locally the repository: ${OSTREE_PACKAGE_BRANCHNAME}"
-    ostree pull ${OSTREE_PACKAGE_BRANCHNAME} ${OSTREE_PACKAGE_BRANCHNAME} --depth=-1 --mirror --repo=${OSTREE_REPO_CONTAINERS}
+    ostree_pull ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}
     set -e
 
     # Commit the result

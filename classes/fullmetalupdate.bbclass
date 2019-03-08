@@ -68,6 +68,13 @@ ostree_push() {
     sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO} ${OSTREE_SSH_ADDRESS} ${OSTREE_BRANCH}
 }
 
+ostree_pull() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+
+    ostree pull ${OSTREE_BRANCH} ${OSTREE_BRANCH} --depth=-1 --mirror --repo=${OSTREE_REPO}
+}
+
 ostree_revparse() {
     local OSTREE_REPO="$1"
     local OSTREE_BRANCH="$2"

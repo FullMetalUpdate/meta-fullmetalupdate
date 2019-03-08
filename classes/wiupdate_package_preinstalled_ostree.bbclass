@@ -41,7 +41,7 @@ do_create_containers_package() {
         bbnote "Add a local remote on the local Docker network for ostree : ${container} ${OSTREE_HTTP_ADDRESS} "
         ostree remote add --no-gpg-verify ${container} ${OSTREE_HTTP_ADDRESS} --repo=${IMAGE_ROOTFS}/ostree_repo
         bbnote "Pull the container: ${container} from the repo"
-        ostree pull ${container} ${container} --repo=${IMAGE_ROOTFS}/ostree_repo 
+        ostree_pull ${IMAGE_ROOTFS}/ostree_repo ${container}
         bbnote "Delete the remote on the local docker network from the repo"
         ostree remote delete ${container} --repo=${IMAGE_ROOTFS}/ostree_repo 
         bbnote "Add a distant remote for ostree : ${OSTREE_HTTP_DISTANT_ADDRESS}"

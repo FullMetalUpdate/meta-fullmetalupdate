@@ -21,9 +21,9 @@ do_pull_remote_ostree_image() {
 
     #Pull locally the remote repo
     set +e
-    #Ignore error for this command, since the remote repo could be empy and we have no way to know
+    # Ignore error for this command, since the remote repo could be empty and we have no way to know
     bbnote "Pull locally the repository: ${OSTREE_BRANCHNAME}"
-    ostree pull ${OSTREE_BRANCHNAME} ${OSTREE_BRANCHNAME} --depth=-1 --mirror --repo=${OSTREE_REPO}
+    ostree_pull ${OSTREE_REPO} ${OSTREE_BRANCHNAME}
     set -e
 }
 
