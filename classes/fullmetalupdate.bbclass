@@ -60,6 +60,13 @@ python __anonymous() {
     d.setVar('HAWKBIT_HTTP_ADDRESS', hawkbit_http_address)
 }
 
+ostree_init() {
+    local OSTREE_REPO="$1"
+    local OSTREE_REPO_MODE="$2"
+
+    ostree --repo=${OSTREE_REPO} init --mode=${OSTREE_REPO_MODE}
+}
+
 ostree_push() {
     local OSTREE_REPO="$1"
     local OSTREE_BRANCH="$2"

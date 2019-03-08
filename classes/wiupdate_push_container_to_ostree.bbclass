@@ -11,7 +11,7 @@ do_push_container_to_ostree_and_hawkbit() {
     fi
 
     if [ ! -d ${OSTREE_REPO_CONTAINERS} ]; then
-        ostree --repo=${OSTREE_REPO_CONTAINERS} init --mode=archive-z2
+        ostree_init ${OSTREE_REPO_CONTAINERS} archive-z2
     fi
 
     # Add missing remotes

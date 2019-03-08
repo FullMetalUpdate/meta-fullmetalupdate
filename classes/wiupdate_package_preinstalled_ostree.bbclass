@@ -32,7 +32,7 @@ do_initialize_ostree_containers() {
     rm -f ${WORKDIR}/${PN}-manifest
 
     bbnote "Initializing a new ostree : ${IMAGE_ROOTFS}/ostree_repo"
-    ostree init --repo=${IMAGE_ROOTFS}/ostree_repo --mode=bare-user-only
+    ostree_init ${IMAGE_ROOTFS}/ostree_repo bare-user-only
 }
 
 do_create_containers_package() {

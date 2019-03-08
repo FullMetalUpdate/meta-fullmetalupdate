@@ -6,7 +6,7 @@ do_pull_remote_ostree_image() {
 
     #Initialize the ostree directory if needed
     if [ ! -d ${OSTREE_REPO} ]; then
-        ostree --repo=${OSTREE_REPO} init --mode=archive-z2
+        ostree_init ${OSTREE_REPO} archive-z2
     fi
 
     #Add missing remotes
