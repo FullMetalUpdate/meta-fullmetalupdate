@@ -13,13 +13,7 @@ do_push_container_to_ostree_and_hawkbit() {
     ostree_init_if_non_existent ${OSTREE_REPO_CONTAINERS} archive-z2
 
     # Add missing remotes
-    if ! ostree_is_remote_present ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}; then
-        bbnote "Add the remote for the container: ${OSTREE_PACKAGE_BRANCHNAME}"
-
-        ostree_remote_add ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
-    else
-        bbnote "The remote for the container: ${OSTREE_PACKAGE_BRANCHNAME} already exists" 
-    fi
+    ostree_remote_add_if_not_present ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
 
     #Pull locally the remote repo
     set +e

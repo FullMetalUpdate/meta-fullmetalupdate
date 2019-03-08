@@ -7,13 +7,7 @@ do_pull_remote_ostree_image() {
     ostree_init_if_non_existent ${OSTREE_REPO} archive-z2
 
     # Add missing remotes
-    if ! ostree_is_remote_present ${OSTREE_REPO} ${OSTREE_BRANCHNAME}; then
-        bbnote "Add the remote for the container: ${OSTREE_BRANCHNAME}"
-
-        ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
-    else
-        bbnote "The remote for the container: ${OSTREE_BRANCHNAME} already exists" 
-    fi
+    ostree_remote_add_if_not_present ${OSTREE_REPO} ${OSTREE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
 
     #Pull locally the remote repo
     set +e

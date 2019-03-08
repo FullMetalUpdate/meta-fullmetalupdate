@@ -119,3 +119,13 @@ ostree_is_remote_present() {
 
     ostree remote list --repo=${OSTREE_REPO} | grep -q ${OSTREE_BRANCH}
 }
+
+ostree_remote_add_if_not_present() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+    local OSTREE_HTTP_ADDRESS="$3"
+
+    if ! ostree_is_remote_present ${OSTREE_REPO} ${OSTREE_BRANCH}; then
+        ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCH} ${OSTREE_HTTP_ADDRESS}
+    fi
+}
