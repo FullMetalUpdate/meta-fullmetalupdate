@@ -21,22 +21,13 @@ do_push_image_to_hawkbit_and_ostree() {
     ostree_push ${OSTREE_REPO} ${OSTREE_BRANCHNAME}
 
     OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO} ${OSTREE_BRANCHNAME})
-    json=$(curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "vendor" : "'${vendor_name}'",
-    "name" : "'${OSTREE_BRANCHNAME}'-'${MACHINE}'",
-    "description" : "'${OSTREE_BRANCHNAME}'",
-    "type" : "os",
-    "version" : "'$(date +%Y%m%d%H%M)'"} ]')
+    json=$(curl_post "/" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_BRANCHNAME}'-'${MACHINE}'", "description" : "'${OSTREE_BRANCHNAME}'", "type" : "os", "version" : "'$(date +%Y%m%d%H%M)'"} ]')
     prop='id'
     temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
     id=$(echo ${temp##*|})
     id=$(echo "$id" | tr -d id: | tr -d ])
     # Push the reference of the OSTree commit to Hawkbit
-    curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules/'${id}'/metadata' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "targetVisible" : true,
-    "value" : "'${OSTREE_REVPARSE}'",
-    "key" : "'rev'"
-    } ]'
+    curl_post "${id}/metadata" '[ { "targetVisible" : true, "value" : "'${OSTREE_REVPARSE}'", "key" : "'rev'" } ]'
 }
 
 addtask do_push_image_to_hawkbit_and_ostree after do_image_ostree before do_image_ostreepush

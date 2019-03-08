@@ -129,3 +129,10 @@ ostree_remote_add_if_not_present() {
         ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCH} ${OSTREE_HTTP_ADDRESS}
     fi
 }
+
+curl_post() {
+    local HAWKBIT_REST="$1"
+    local HAWKBIT_DATA="$2"
+
+    curl "${HAWKBIT_HTTP_ADDRESS}/rest/v1/softwaremodules/${HAWKBIT_REST}" -i -X POST --user admin:admin -H "Content-Type: application/hal+json;charset=UTF-8" -d "${HAWKBIT_DATA}"
+}

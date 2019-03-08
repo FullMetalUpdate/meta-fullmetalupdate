@@ -35,41 +35,19 @@ do_push_container_to_ostree_and_hawkbit() {
     # Post the newly created container information to hawkbit
     OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME})
     # Push the container information to Hawkbit
-    json=$(curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "vendor" : "'${HAWKBIT_VENDOR_NAME}'",
-    "name" : "'${OSTREE_PACKAGE_BRANCHNAME}'",
-    "description" : "'$OSTREE_PACKAGE_BRANCHNAME'",
-    "type" : "application",
-    "version" : "'$(date +%Y%m%d%H%M)'"
-    } ]')
+    json=$(curl_post "/" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_PACKAGE_BRANCHNAME}'", "description" : "'$OSTREE_PACKAGE_BRANCHNAME'", "type" : "application", "version" : "'$(date +%Y%m%d%H%M)'" } ]')
     prop='id'
     temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
     id=$(echo ${temp##*|})
     id=$(echo "$id" | tr -d id: | tr -d ])
     # Push the reference of the OSTree commit to Hawkbit
-    curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules/'${id}'/metadata' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "targetVisible" : true,
-    "value" : "'${OSTREE_REVPARSE}'",
-    "key" : "'rev'"
-    } ]'
+    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${OSTREE_REVPARSE}'", "key" : "'rev'" } ]'
     # Push if the container should be automatically started to Hawkbit
-    curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules/'${id}'/metadata' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "targetVisible" : true,
-    "value" : "'${AUTOSTART}'",
-    "key" : "'autostart'"
-    } ]'
+    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${AUTOSTART}'", "key" : "'autostart'" } ]'
     # Push if the container is using the screen
-    curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules/'${id}'/metadata' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "targetVisible" : true,
-    "value" : "'${SCREENUSED}'",
-    "key" : "'screenused'"
-    } ]'
+    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${SCREENUSED}'", "key" : "'screenused'" } ]'
     # Push if the container should be removed from the embedded system to Hawkbit
-    curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules/'${id}'/metadata' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {
-    "targetVisible" : true,
-    "value" : "'${AUTOREMOVE}'",
-    "key" : "'autoremove'"
-    } ]'
+    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${AUTOREMOVE}'", "key" : "'autoremove'" } ]'
 }
 
 # do_copy_container task defined in oci_image.bbclass
