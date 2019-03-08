@@ -103,3 +103,10 @@ ostree_remote_delete() {
 
     ostree remote delete ${OSTREE_BRANCH} --repo=${OSTREE_REPO}
 }
+
+ostree_is_remote_present() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+
+    ostree remote list --repo=${OSTREE_REPO} | grep -q ${OSTREE_BRANCH}
+}

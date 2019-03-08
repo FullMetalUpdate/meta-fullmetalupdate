@@ -15,9 +15,7 @@ do_push_container_to_ostree_and_hawkbit() {
     fi
 
     # Add missing remotes
-    refs=$(ostree remote list --repo=${OSTREE_REPO_CONTAINERS} | awk '{if ($0=="${OSTREE_PACKAGE_BRANCHNAME}") print $0}')
-
-    if [ -z "$refs" ]; then
+    if ! ostree_is_remote_present ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}; then
         bbnote "Add the remote for the container: ${OSTREE_PACKAGE_BRANCHNAME}"
 
         ostree_remote_add ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}

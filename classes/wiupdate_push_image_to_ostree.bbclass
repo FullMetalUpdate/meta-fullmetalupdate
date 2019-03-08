@@ -9,10 +9,8 @@ do_pull_remote_ostree_image() {
         ostree_init ${OSTREE_REPO} archive-z2
     fi
 
-    #Add missing remotes
-    refs=$(ostree remote list --repo=${OSTREE_REPO} | awk '{if ($0=="${OSTREE_BRANCHNAME}") print $0}')
-    
-    if [ -z "$refs" ]; then
+    # Add missing remotes
+    if ! ostree_is_remote_present ${OSTREE_REPO} ${OSTREE_BRANCHNAME}; then
         bbnote "Add the remote for the container: ${OSTREE_BRANCHNAME}"
 
         ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCHNAME} ${OSTREE_HTTP_ADDRESS}
