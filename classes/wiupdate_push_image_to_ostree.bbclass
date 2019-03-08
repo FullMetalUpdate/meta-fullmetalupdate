@@ -28,8 +28,7 @@ do_pull_remote_ostree_image() {
 }
 
 do_push_image_to_hawkbit_and_ostree() {
-    # Push the result to the remote OSTREE
-    sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO} ${OSTREE_SSH_ADDRESS} ${OSTREE_BRANCHNAME}
+    ostree_push ${OSTREE_REPO} ${OSTREE_BRANCHNAME}
 
     OSTREE_REVPARSE=$(ostree rev-parse ${OSTREE_BRANCHNAME} --repo=${OSTREE_REPO}| head)
     json=$(curl ${HAWKBIT_HTTP_ADDRESS}'/rest/v1/softwaremodules' -i -X POST --user admin:admin -H 'Content-Type: application/hal+json;charset=UTF-8' -d '[ {

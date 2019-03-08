@@ -59,3 +59,11 @@ python __anonymous() {
     d.setVar('OSTREE_SSH_ADDRESS', ostree_ssh_address)
     d.setVar('HAWKBIT_HTTP_ADDRESS', hawkbit_http_address)
 }
+
+ostree_push() {
+    local OSTREE_REPO="$1"
+    local OSTREE_BRANCH="$2"
+
+    bbnote "Push the build result to the remote OSTREE"
+    sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO} ${OSTREE_SSH_ADDRESS} ${OSTREE_BRANCH}
+}

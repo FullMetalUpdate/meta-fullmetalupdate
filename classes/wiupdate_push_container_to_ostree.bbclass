@@ -40,9 +40,7 @@ do_push_container_to_ostree_and_hawkbit() {
            --branch=${OSTREE_PACKAGE_BRANCHNAME} \
            --subject="Commit-id: ${IMAGE_NAME}${IMAGE_NAME_SUFFIX}"
 
-    # Push the result to the remote OSTREE
-    bbnote "Push the build result to the remote OSTREE"   
-    sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO_CONTAINERS} ${OSTREE_SSH_ADDRESS} ${OSTREE_PACKAGE_BRANCHNAME}
+    ostree_push ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME}
 
     # Post the newly created container information to hawkbit
     OSTREE_REVPARSE=$(ostree rev-parse ${OSTREE_PACKAGE_BRANCHNAME} --repo=${OSTREE_REPO_CONTAINERS}| head)
