@@ -40,14 +40,20 @@ do_push_container_to_ostree_and_hawkbit() {
     temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
     id=$(echo ${temp##*|})
     id=$(echo "$id" | tr -d id: | tr -d ])
+
+    hawkbit_metadata_revparse=$(hawkbit_metadata_value 'rev' ${OSTREE_REVPARSE})
+    hawkbit_metadata_autostart=$(hawkbit_metadata_value 'autostart' ${AUTOSTART})
+    hawkbit_metadata_screenused=$(hawkbit_metadata_value 'screenused' ${SCREENUSED})
+    hawkbit_metadata_autoremove=$(hawkbit_metadata_value 'autoremoved' ${AUTOREMOVE})
+
     # Push the reference of the OSTree commit to Hawkbit
-    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${OSTREE_REVPARSE}'", "key" : "'rev'" } ]'
+    curl_post "/${id}/metadata" "${hawkbit_metadata_revparse}"
     # Push if the container should be automatically started to Hawkbit
-    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${AUTOSTART}'", "key" : "'autostart'" } ]'
+    curl_post "/${id}/metadata" "${hawkbit_metadata_autostart}"
     # Push if the container is using the screen
-    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${SCREENUSED}'", "key" : "'screenused'" } ]'
+    curl_post "/${id}/metadata" "${hawkbit_metadata_screenused}"
     # Push if the container should be removed from the embedded system to Hawkbit
-    curl_post '/rest/v1/softwaremodules/'${id}'/metadata' '[ { "targetVisible" : true, "value" : "'${AUTOREMOVE}'", "key" : "'autoremove'" } ]'
+    curl_post "/${id}/metadata" "${hawkbit_metadata_autoremove}"
 }
 
 # do_copy_container task defined in oci_image.bbclass

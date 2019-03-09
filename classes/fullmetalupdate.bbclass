@@ -136,3 +136,10 @@ curl_post() {
 
     curl "${HAWKBIT_HTTP_ADDRESS}/rest/v1/softwaremodules/${HAWKBIT_REST}" -i -X POST --user admin:admin -H "Content-Type: application/hal+json;charset=UTF-8" -d "${HAWKBIT_DATA}"
 }
+
+hawkbit_metadata_value() {
+    local HAWKBIT_METADATA_KEY="$1"
+    local HAWKBIT_METADATA_VALUE="$2"
+
+    echo '[ { "targetVisible" : true, "value" : "'${HAWKBIT_METADATA_VALUE}'", "key" : "'${HAWKBIT_METADATA_KEY}'" } ]'
+}
