@@ -1,7 +1,14 @@
 inherit fullmetalupdate
 
-do_push_image_to_hawkbit_and_ostree[recrdeptask] = "do_pull_remote_ostree_image"
+do_pull_remote_ostree_image[depends] = " \
+    ostree-native:do_populate_sysroot \
+"
 
+do_push_image_to_hawkbit_and_ostree[recrdeptask] = "do_pull_remote_ostree_image"
+do_push_image_to_hawkbit_and_ostree[depends] = " \
+    curl-native:do_populate_sysroot \
+    ostree-native:do_populate_sysroot \
+"
 do_pull_remote_ostree_image() {
 
     ostree_init_if_non_existent ${OSTREE_REPO} archive-z2

@@ -35,6 +35,14 @@ do_initialize_ostree_containers() {
     ostree_init ${IMAGE_ROOTFS}/ostree_repo bare-user-only
 }
 
+do_create_containers_package[depends] = " \
+    ostree-native:do_populate_sysroot \
+"
+
+do_initialize_ostree_containers[depends] = " \
+    ostree-native:do_populate_sysroot \
+"
+
 do_create_containers_package() {
 
     for container in ${PREINSTALLED_CONTAINERS_LIST}; do
