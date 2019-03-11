@@ -61,85 +61,85 @@ python __anonymous() {
 }
 
 ostree_init() {
-    local OSTREE_REPO="$1"
-    local OSTREE_REPO_MODE="$2"
+    local ostree_repo="$1"
+    local ostree_repo_mode="$2"
 
-    ostree --repo=${OSTREE_REPO} init --mode=${OSTREE_REPO_MODE}
+    ostree --repo=${ostree_repo} init --mode=${ostree_repo_mode}
 }
 
 ostree_init_if_non_existent() {
-    local OSTREE_REPO="$1"
-    local OSTREE_REPO_MODE="$2"
+    local ostree_repo="$1"
+    local ostree_repo_mode="$2"
 
-    if [ ! -d ${OSTREE_REPO} ]; then
-        ostree_init ${OSTREE_REPO} ${OSTREE_REPO_MODE}
+    if [ ! -d ${ostree_repo} ]; then
+        ostree_init ${ostree_repo} ${ostree_repo_mode}
     fi
 }
 
 ostree_push() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
 
     bbnote "Push the build result to the remote OSTREE"
-    sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${OSTREE_REPO} ${OSTREE_SSH_ADDRESS} ${OSTREE_BRANCH}
+    sshpass -p ${OSTREEPUSH_SSH_PWD} ostree-push --repo ${ostree_repo} ${OSTREE_SSH_ADDRESS} ${ostree_branch}
 }
 
 ostree_pull() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
 
-    ostree pull ${OSTREE_BRANCH} ${OSTREE_BRANCH} --depth=-1 --mirror --repo=${OSTREE_REPO}
+    ostree pull ${ostree_branch} ${ostree_branch} --depth=-1 --mirror --repo=${ostree_repo}
 }
 
 ostree_revparse() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
 
-    ostree rev-parse ${OSTREE_BRANCH} --repo=${OSTREE_REPO} | head
+    ostree rev-parse ${ostree_branch} --repo=${ostree_repo} | head
 }
 
 ostree_remote_add() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
-    local OSTREE_HTTP_ADDRESS="$3"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
+    local ostree_http_address="$3"
 
-    ostree remote add --no-gpg-verify ${OSTREE_BRANCH} ${OSTREE_HTTP_ADDRESS} --repo=${OSTREE_REPO}
+    ostree remote add --no-gpg-verify ${ostree_branch} ${ostree_http_address} --repo=${ostree_repo}
 }
 
 ostree_remote_delete() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
 
-    ostree remote delete ${OSTREE_BRANCH} --repo=${OSTREE_REPO}
+    ostree remote delete ${ostree_branch} --repo=${ostree_repo}
 }
 
 ostree_is_remote_present() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
 
-    ostree remote list --repo=${OSTREE_REPO} | grep -q ${OSTREE_BRANCH}
+    ostree remote list --repo=${ostree_repo} | grep -q ${ostree_branch}
 }
 
 ostree_remote_add_if_not_present() {
-    local OSTREE_REPO="$1"
-    local OSTREE_BRANCH="$2"
-    local OSTREE_HTTP_ADDRESS="$3"
+    local ostree_repo="$1"
+    local ostree_branch="$2"
+    local ostree_http_address="$3"
 
-    if ! ostree_is_remote_present ${OSTREE_REPO} ${OSTREE_BRANCH}; then
-        ostree_remote_add ${OSTREE_REPO} ${OSTREE_BRANCH} ${OSTREE_HTTP_ADDRESS}
+    if ! ostree_is_remote_present ${ostree_repo} ${ostree_branch}; then
+        ostree_remote_add ${ostree_repo} ${ostree_branch} ${ostree_http_address}
     fi
 }
 
 curl_post() {
-    local HAWKBIT_REST="$1"
-    local HAWKBIT_DATA="$2"
+    local hawkbit_rest="$1"
+    local hawkbit_data="$2"
 
-    curl "${HAWKBIT_HTTP_ADDRESS}/rest/v1/softwaremodules/${HAWKBIT_REST}" -i -X POST --user admin:admin -H "Content-Type: application/hal+json;charset=UTF-8" -d "${HAWKBIT_DATA}"
+    curl "${HAWKBIT_HTTP_ADDRESS}/rest/v1/softwaremodules/${hawkbit_rest}" -i -X POST --user admin:admin -H "Content-Type: application/hal+json;charset=UTF-8" -d "${hawkbit_data}"
 }
 
 hawkbit_metadata_value() {
-    local HAWKBIT_METADATA_KEY="$1"
-    local HAWKBIT_METADATA_VALUE="$2"
+    local key="$1"
+    local value="$2"
 
-    echo '[ { "targetVisible" : true, "value" : "'${HAWKBIT_METADATA_VALUE}'", "key" : "'${HAWKBIT_METADATA_KEY}'" } ]'
+    echo '[ { "targetVisible" : true, "value" : "'${value}'", "key" : "'${key}'" } ]'
 }
