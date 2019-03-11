@@ -26,5 +26,7 @@ PACKAGECONFIG_remove-pn-qtbase  = "x11 xcb xkb xkbcommon-evdev "
 
 SOTA_MACHINE = "imx6"
 
+WKS_FILES ?= "fullmetalupdate-${MACHINE}.wks.in"
+
 inherit core-image
 inherit wiupdate_push_image_to_ostree
