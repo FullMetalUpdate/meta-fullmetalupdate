@@ -75,6 +75,7 @@ ostree_init_if_non_existent() {
     local ostree_repo_mode="$2"
 
     if [ ! -d ${ostree_repo} ]; then
+        mkdir -p ${ostree_repo}
         ostree_init ${ostree_repo} ${ostree_repo_mode}
     fi
 }
