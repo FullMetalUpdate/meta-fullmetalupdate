@@ -6,6 +6,10 @@ python __anonymous() {
     if not ostree_repo:
         bb.fatal("OSTREE_REPO should be set in your local.conf")
 
+    ostree_repo = d.getVar('OSTREE_BRANCHNAME')
+    if not ostree_repo:
+        bb.fatal("OSTREE_BRANCHNAME should be set in your local.conf")
+
     config_file = d.getVar('HAWKBIT_CONFIG_FILE')
     if not config_file:
         bb.fatal("Please export/define HAWKBIT_CONFIG_FILE")
@@ -46,7 +50,6 @@ python __anonymous() {
     d.setVar('HAWKBIT_VENDOR_NAME', hawkbit_vendor_name)
     d.setVar('HAWKBIT_URL_PORT', hawkbit_url_port)
     d.setVar('HAWKBIT_SSL', hawkbit_ssl)
-    d.setVar('OSTREE_BRANCHNAME', ostree_name_remote)
     d.setVar('OSTREE_OSNAME', ostree_name_remote)
     d.setVar('HAWKBIT_HOSTNAME', hawkbit_hostname)
     d.setVar('OSTREE_HOSTNAME', ostree_hostname)
