@@ -1,0 +1,10 @@
+[Unit]
+Description=DHCP Service
+# wait for network to come up before we run
+After=network.target
+
+[Service]
+ExecStart=/usr/rootdirs/sbin/udhcpc
+
+[Install]
+WantedBy=multi-user.target
