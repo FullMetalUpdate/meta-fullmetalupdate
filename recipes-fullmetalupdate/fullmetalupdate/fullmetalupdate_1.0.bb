@@ -24,9 +24,8 @@ RDEPENDS_${PN} += " \
     qtmultimedia \
 "
 
-SRCREV = "${AUTOREV}"
 SRC_URI += " \
-    git://github.com/FullMetalUpdate/fullmetalupdate.git;branch=master \
+    git://github.com/FullMetalUpdate/fullmetalupdate.git;tag=v${PV} \
     file://config.cfg \
     file://fullmetalupdate.sh \
     file://fullmetalupdate.service \
