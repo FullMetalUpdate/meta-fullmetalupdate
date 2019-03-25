@@ -14,14 +14,6 @@ RDEPENDS_${PN} += " \
     dbus \
     python3-pydbus \
     python3-pygobject \
-    python3-asyncqt \
-    python3-pyqt5 \
-    qtbase \
-    qtbase-plugins \
-    qtquickcontrols \
-    qtquickcontrols-qmlplugins \
-    qtdeclarative-qmlplugins \
-    qtmultimedia \
 "
 
 SRC_URI += " \
@@ -37,9 +29,6 @@ FILES_${PN} += " \
 "
 
 SYSTEMD_SERVICE_${PN} = "fullmetalupdate.service"
-PACKAGECONFIG-pn-qtbase = "libpng eglfs gl gles2 accessibility freetype fontconfig jpeg evdev"
-PACKAGECONFIG_remove-pn-qtconnectivity = "bluez"
-PACKAGECONFIG_remove-pn-qtsystems = "bluez"
 
 do_install() {
     install -d ${D}${base_prefix}/bin/fullmetalupdate/
