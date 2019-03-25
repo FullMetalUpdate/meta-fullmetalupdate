@@ -2,7 +2,7 @@
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 DESCRIPTION = "FullMetalUpdate Python daemon"
-LICENSE = "CLOSED"
+LICENSE = "MIT"
 
 inherit systemd
 

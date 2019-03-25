@@ -1,5 +1,5 @@
 SUMMARY = "pydbus version 0.5.1"
-LICENSE = "CLOSED"
+LICENSE = "MIT"
 SRCNAME = "pydbus"
 
 inherit pypi setuptools3
