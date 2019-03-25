@@ -29,4 +29,4 @@ SOTA_MACHINE = "imx6"
 WKS_FILES ?= "fullmetalupdate-${MACHINE}.wks.in"
 
 inherit core-image
-inherit wiupdate_push_image_to_ostree
+inherit fullmetalupdate_push_image_to_ostree

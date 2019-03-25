@@ -1,5 +1,5 @@
 [Unit]
-Description=WiUpdate Python daemon
+Description=FullMetalUpdate Python daemon
 After=network.target
 
 [Service]
