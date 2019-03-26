@@ -1,8 +1,9 @@
 # Copyright (C) 2019 Witekio
-# Released under the MIT license (see COPYING.MIT for the terms)
+# Released under the GNU LESSER GENERAL PUBLIC LICENSE Version 2.1 license
 
 DESCRIPTION = "FullMetalUpdate Python daemon"
-LICENSE = "MIT"
+LICENSE = "LGPLv2.1"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/LGPL-2.1;md5=1a6d268fd218675ffea8be556788b780"
 
 inherit systemd
 
