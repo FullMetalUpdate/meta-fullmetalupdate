@@ -91,8 +91,17 @@ ostree_push() {
 ostree_pull() {
     local ostree_repo="$1"
     local ostree_branch="$2"
+    local ostree_depth="$3"
 
-    ostree pull ${ostree_branch} ${ostree_branch} --depth=-1 --mirror --repo=${ostree_repo}
+    ostree pull ${ostree_branch} ${ostree_branch} --depth=${ostree_depth} --repo=${ostree_repo}
+}
+
+ostree_pull_mirror() {
+    local ostree_repo="$1"
+    local ostree_branch="$2"
+    local ostree_depth="$3"
+
+    ostree pull ${ostree_branch} ${ostree_branch} --depth=${ostree_depth} --mirror --repo=${ostree_repo}
 }
 
 ostree_revparse() {
