@@ -24,6 +24,9 @@ oci_tarball_creation_hook() {
 
         bbnote "Copying old rootfs to ${CONTAINER_IMAGE_ROOTFS}"
         cp -R "${IMAGE_ROOTFS}/" "${CONTAINER_IMAGE_ROOTFS}/"
+        bbnote "Copying start up file for the container to ${CONTAINER_IMAGE_ROOTFS}/${IMAGE_ROOTFS}"
+        cp ${CONTAINER_STARTUP} "${CONTAINER_IMAGE_ROOTFS}/rootfs/entry.sh"
+        chmod 755 "${CONTAINER_IMAGE_ROOTFS}/rootfs/entry.sh"
         bbnote "Copy runc json config ${RUNC_CONFIG} at top of ${CONTAINER_IMAGE_ROOTFS}/"
         cp ${RUNC_CONFIG} "${CONTAINER_IMAGE_ROOTFS}/config.json"
         bbnote "Copy  systemd service config ${SYSTEMD_CONFIG} at top of ${CONTAINER_IMAGE_ROOTFS}/"
