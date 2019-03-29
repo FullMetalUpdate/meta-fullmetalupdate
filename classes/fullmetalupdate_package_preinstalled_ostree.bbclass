@@ -44,12 +44,14 @@ do_initialize_ostree_containers[depends] = " \
 "
 
 do_create_containers_package() {
+    
+    local ostree_depth="1"
 
     for container in ${PREINSTALLED_CONTAINERS_LIST}; do
-        bbnote "Add a local remote on the local Docker network for ostree : ${container} ${OSTREE_HTTP_ADDRESS} "
+        bbnote "Add a local remote on the local Docker network for ostree : ${container} ${OSTREE_HTTP_ADDRESS} ${IMAGE_ROOTFS}"
         ostree_remote_add ${IMAGE_ROOTFS}/ostree_repo ${container} ${OSTREE_HTTP_ADDRESS}
-        bbnote "Pull the container: ${container} from the repo"
-        ostree_pull ${IMAGE_ROOTFS}/ostree_repo ${container}
+        bbnote "Pull the container: remote ${container} branch name ${container} from the repo"
+        ostree_pull ${IMAGE_ROOTFS}/ostree_repo ${container} ${ostree_depth}
         bbnote "Delete the remote on the local docker network from the repo"
         ostree_remote_delete ${IMAGE_ROOTFS}/ostree_repo ${container}
         bbnote "Add a distant remote for ostree : ${OSTREE_HTTP_DISTANT_ADDRESS}"

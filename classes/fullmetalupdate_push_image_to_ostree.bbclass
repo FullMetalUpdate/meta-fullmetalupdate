@@ -10,7 +10,9 @@ do_push_image_to_hawkbit_and_ostree[depends] = " \
     ostree-native:do_populate_sysroot \
 "
 do_pull_remote_ostree_image() {
-
+    
+    local ostree_depth="-1"
+    
     ostree_init_if_non_existent ${OSTREE_REPO} archive-z2
 
     # Add missing remotes
@@ -20,7 +22,7 @@ do_pull_remote_ostree_image() {
     set +e
     # Ignore error for this command, since the remote repo could be empty and we have no way to know
     bbnote "Pull locally the repository: ${OSTREE_BRANCHNAME}"
-    ostree_pull ${OSTREE_REPO} ${OSTREE_BRANCHNAME}
+    ostree_pull_mirror ${OSTREE_REPO} ${OSTREE_BRANCHNAME} ${ostree_depth}
     set -e
 }
 
