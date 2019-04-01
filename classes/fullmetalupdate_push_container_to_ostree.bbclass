@@ -10,9 +10,6 @@ do_push_container_to_ostree_and_hawkbit[depends] = " \
 "
 
 do_push_container_to_ostree_and_hawkbit() {
-
-    local ostree_depth="-1"
-
     if [ -z "$OSTREE_PACKAGE_BRANCHNAME" ]; then
         bbfatal "OSTREE_PACKAGE_BRANCHNAME should be set in your local.conf"
     fi
@@ -26,7 +23,7 @@ do_push_container_to_ostree_and_hawkbit() {
     set +e
     # Ignore error for this command, since the remote repo could be empty and we have no way to know
     bbnote "Pull locally the repository: ${OSTREE_PACKAGE_BRANCHNAME}"
-    ostree_pull_mirror ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME} ${ostree_depth}
+    ostree_pull_mirror ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME} ${OSTREE_MIRROR_PULL_DEPTH} ${OSTREE_MIRROR_PULL_RETRIES}
     set -e
 
     # Commit the result

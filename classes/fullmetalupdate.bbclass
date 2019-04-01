@@ -61,6 +61,10 @@ python __anonymous() {
     d.setVar('OSTREE_HTTP_DISTANT_ADDRESS', ostree_http_distant_address)
     d.setVar('OSTREE_SSH_ADDRESS', ostree_ssh_address)
     d.setVar('HAWKBIT_HTTP_ADDRESS', hawkbit_http_address)
+
+    d.setVar('OSTREE_MIRROR_PULL_RETRIES', "10")
+    d.setVar('OSTREE_MIRROR_PULL_DEPTH', "0")
+    d.setVar('OSTREE_CONTAINER_PULL_DEPTH', "1")
 }
 
 ostree_init() {
@@ -100,8 +104,18 @@ ostree_pull_mirror() {
     local ostree_repo="$1"
     local ostree_branch="$2"
     local ostree_depth="$3"
+    local ostree_maxretry="$4"
+    local lookup="Timeout"
+    local counter_retry=0
 
-    ostree pull ${ostree_branch} ${ostree_branch} --depth=${ostree_depth} --mirror --repo=${ostree_repo}
+    $(ostree pull ${ostree_branch} ${ostree_branch} --depth=${ostree_depth} --mirror --repo=${ostree_repo} 2>&1 | grep -q ${lookup}) 
+
+    while ! test $? -gt 0 && [ ${counter_retry} -le ${ostree_maxretry} ]
+    do 
+        counter_retry=$(expr $counter_retry + 1)
+        bbnote "OsTree pull counter retry: ${counter_retry}"
+        $(ostree pull ${ostree_branch} ${ostree_branch} --depth=${ostree_depth} --mirror --repo=${ostree_repo} 2>&1 | grep -q ${lookup}) 
+	done 
 }
 
 ostree_revparse() {
