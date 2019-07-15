@@ -1,6 +1,6 @@
 python __anonymous() {
     if bb.utils.contains('DISTRO_FEATURES', 'sota', True, False, d):
-        d.appendVarFlag("do_image_wic", "depends", " %s:do_image_otaimg" % d.getVar("IMAGE_BASENAME", True))
+        d.appendVarFlag("do_image_wic", "depends", " %s:do_image_ota" % d.getVar("IMAGE_BASENAME", True))
 }
 
 OVERRIDES .= "${@bb.utils.contains('DISTRO_FEATURES', 'sota', ':sota', '', d)}"
