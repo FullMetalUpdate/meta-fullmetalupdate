@@ -25,19 +25,19 @@ SRC_URI += " \
 "
 
 FILES_${PN} += " \
-    ${base_prefix}/bin/fullmetalupdate \
-    ${base_prefix}/bin/fullmetalupdate.service \
+    ${base_prefix}/usr/fullmetalupdate \
+    ${base_prefix}/usr/fullmetalupdate.service \
 "
 
 SYSTEMD_SERVICE_${PN} = "fullmetalupdate.service"
 
 do_install() {
-    install -d ${D}${base_prefix}/bin/fullmetalupdate/
-    cp -r --no-dereference --preserve=mode,links -v ${WORKDIR}/git/* ${D}${base_prefix}/bin/fullmetalupdate/
-    rm -rf ${D}${base_prefix}/bin/fullmetalupdate/.git/
+    install -d ${D}${base_prefix}/usr/fullmetalupdate/
+    cp -r --no-dereference --preserve=mode,links -v ${WORKDIR}/git/* ${D}${base_prefix}/usr/fullmetalupdate/
+    rm -rf ${D}${base_prefix}/usr/fullmetalupdate/.git/
 
-    install -m 755 ${WORKDIR}/config.cfg ${D}${base_prefix}/bin/fullmetalupdate/rauc_hawkbit/config.cfg
-    install -m 755 ${WORKDIR}/fullmetalupdate.sh ${D}${base_prefix}/bin/fullmetalupdate/fullmetalupdate.sh
+    install -m 755 ${WORKDIR}/config.cfg ${D}${base_prefix}/usr/fullmetalupdate/rauc_hawkbit/config.cfg
+    install -m 755 ${WORKDIR}/fullmetalupdate.sh ${D}${base_prefix}/usr/fullmetalupdate/fullmetalupdate.sh
 
     install -d ${D}${systemd_system_unitdir}
     install -m 0644  ${WORKDIR}/fullmetalupdate.service ${D}${systemd_system_unitdir}
