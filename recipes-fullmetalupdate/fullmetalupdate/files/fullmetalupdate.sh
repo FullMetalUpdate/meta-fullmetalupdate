@@ -1,2 +1,2 @@
 #! /bin/sh
-/usr/bin/python3 /bin/fullmetalupdate/fullmetalupdate.py --config /bin/fullmetalupdate/rauc_hawkbit/config.cfg
+/usr/bin/python3 /usr/fullmetalupdate/fullmetalupdate.py --config /usr/fullmetalupdate/rauc_hawkbit/config.cfg
