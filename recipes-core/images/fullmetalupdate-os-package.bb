@@ -24,8 +24,6 @@ VIRTUAL-RUNTIME_initscripts = ""
 
 PACKAGECONFIG_remove-pn-qtbase  = "x11 xcb xkb xkbcommon-evdev "
 
-SOTA_MACHINE = "imx6"
-
 WKS_FILES ?= "fullmetalupdate-${MACHINE}.wks.in"
 
 inherit core-image
