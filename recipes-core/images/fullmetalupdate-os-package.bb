@@ -13,7 +13,6 @@ IMAGE_INSTALL = " \
     virtual/runc \
     busybox-udhcpc \
     fullmetalupdate \
-    networkmanager \
 "
 
 IMAGE_FEATURES_REPLACES_ssh-server-openssh = "ssh-server-dropbear"
