@@ -3,7 +3,7 @@ Description=FullMetalUpdate Python daemon
 After=network.target
 
 [Service]
-WorkingDirectory=/usr/rootdirs/bin/fullmetalupdate/
+WorkingDirectory=/usr/fullmetalupdate/
 ExecStart=/usr/fullmetalupdate/fullmetalupdate.sh
 Restart=always
 RestartSec=3
