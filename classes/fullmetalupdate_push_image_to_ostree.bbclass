@@ -30,7 +30,7 @@ do_push_image_to_hawkbit_and_ostree() {
     OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO} ${OSTREE_BRANCHNAME})
     hawkbit_metadata_revparse=$(hawkbit_metadata_value 'rev' ${OSTREE_REVPARSE})
 
-    json=$(curl_post "/" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_BRANCHNAME}'-'${MACHINE}'", "description" : "'${OSTREE_BRANCHNAME}'", "type" : "os", "version" : "'$(date +%Y%m%d%H%M)'"} ]')
+    json=$(curl_post "/" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_BRANCHNAME}'", "description" : "'${OSTREE_BRANCHNAME}'", "type" : "os", "version" : "'$(date +%Y%m%d%H%M)'"} ]')
     prop='id'
     temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
     id=$(echo ${temp##*|})
