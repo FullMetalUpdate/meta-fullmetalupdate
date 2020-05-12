@@ -39,5 +39,5 @@ do_push_image_to_hawkbit_and_ostree() {
     curl_post "${id}/metadata" "${hawkbit_metadata_revparse}"
 }
 
-addtask do_push_image_to_hawkbit_and_ostree after do_image_ostreecommit before do_image_ostreepush
+addtask do_push_image_to_hawkbit_and_ostree after do_image_ostree before do_image_ostreepush
 addtask do_pull_remote_ostree_image after do_rootfs before do_image_ostree
