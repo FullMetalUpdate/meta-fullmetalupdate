@@ -1,0 +1,5 @@
+#!/bin/sh
+# script used by emergency and rescue services to reboot automatically after 30 seconds
+
+echo "Press Enter to avoid automatic reboot. After 30 seconds the system will reboot."
+read -t 30 || /bin/systemctl reboot

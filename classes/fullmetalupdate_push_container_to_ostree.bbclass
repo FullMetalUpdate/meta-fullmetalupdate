@@ -14,6 +14,13 @@ do_push_container_to_ostree_and_hawkbit() {
         bbfatal "OSTREE_PACKAGE_BRANCHNAME should be set in your local.conf"
     fi
 
+    if [ ! -z "${NOTIFY}" ]; then
+        test -z ${TIMEOUT} && err_msg="\n\tTIMEOUT should be set to a positive delay"
+        test -z ${AUTOSTART} && AUTOSTART="1"
+        test ${AUTOSTART} = "0" && err_msg="$err_msg\n\tAUTOSTART cannot be set to 0 if NOTIFY is set"
+        test -z ${err_msg} || bbfatal "NOTIFY is set, but these variables are misconfigured:$err_msg"
+    fi
+
     ostree_init_if_non_existent ${OSTREE_REPO_CONTAINERS} archive-z2
 
     # Add missing remotes
@@ -49,6 +56,8 @@ do_push_container_to_ostree_and_hawkbit() {
     hawkbit_metadata_autostart=$(hawkbit_metadata_value 'autostart' ${AUTOSTART})
     hawkbit_metadata_screenused=$(hawkbit_metadata_value 'screenused' ${SCREENUSED})
     hawkbit_metadata_autoremove=$(hawkbit_metadata_value 'autoremoved' ${AUTOREMOVE})
+    test -z ${NOTIFY} || hawkbit_metadata_notify=$(hawkbit_metadata_value 'notify' ${NOTIFY})
+    test -z ${TIMEOUT} || hawkbit_metadata_timeout=$(hawkbit_metadata_value 'timeout' ${TIMEOUT})
 
     # Push the reference of the OSTree commit to Hawkbit
     curl_post "/${id}/metadata" "${hawkbit_metadata_revparse}"
@@ -58,6 +67,9 @@ do_push_container_to_ostree_and_hawkbit() {
     curl_post "/${id}/metadata" "${hawkbit_metadata_screenused}"
     # Push if the container should be removed from the embedded system to Hawkbit
     curl_post "/${id}/metadata" "${hawkbit_metadata_autoremove}"
+    # Push if the container should implement the systemd notify feature and rollback
+    test -z ${NOTIFY} || curl_post "/${id}/metadata" "${hawkbit_metadata_notify}"
+    test -z ${TIMEOUT} || curl_post "/${id}/metadata" "${hawkbit_metadata_timeout}"
 }
 
 # do_copy_container task defined in oci_image.bbclass
