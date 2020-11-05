@@ -1,0 +1,19 @@
+diff --git a/init.sh b/init.sh
+index 4818a07..6caacd6 100644
+--- a/init.sh
++++ b/init.sh
+@@ -16,9 +16,8 @@ do_mount_fs() {
+ 
+ bail_out() {
+ 	log_error "$@"
+-	log_info "Rebooting..."
+-	#exec reboot -f
+-	exec sh
++	log_info "Press Enter to avoid automatic reboot. After 30 seconds the system will reboot."
++	read -t 30 || exec reboot -f
+ }
+ 
+ get_ostree_sysroot() {
+-- 
+2.17.1
+
