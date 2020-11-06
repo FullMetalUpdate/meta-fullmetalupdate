@@ -8,10 +8,10 @@ SRC_URI += " \
 "
 
 do_install_append() {
-    install -d ${D}${sysconfdir}/systemd/system/emergency.service.d/
-    install -d ${D}${sysconfdir}/systemd/system/rescue.service.d/
-    install -m 0644 ${WORKDIR}/override.conf ${D}${sysconfdir}/systemd/system/emergency.service.d/override.conf
-    install -m 0644 ${WORKDIR}/override.conf ${D}${sysconfdir}/systemd/system/rescue.service.d/override.conf
-    install -m 0755 ${WORKDIR}/autorollback ${D}${libdir}/systemd/autorollback
+    install -d ${D}${systemd_system_unitdir}/emergency.service.d/
+    install -d ${D}${systemd_system_unitdir}/rescue.service.d/
+    install -m 0644 ${WORKDIR}/override.conf ${D}${systemd_system_unitdir}/emergency.service.d/override.conf
+    install -m 0644 ${WORKDIR}/override.conf ${D}${systemd_system_unitdir}/rescue.service.d/override.conf
+    install -m 0755 ${WORKDIR}/autorollback ${D}${systemd_unitdir}/autorollback
 }
 
