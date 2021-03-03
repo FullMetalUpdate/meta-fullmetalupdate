@@ -25,6 +25,6 @@ OSTREE_INITRAMFS_FSTYPES ??= "${@oe.utils.ifelse(d.getVar('OSTREE_BOOTLOADER', T
 OSTREE_REPO = "${DEPLOY_DIR_IMAGE}/ostree_repo"
 OSTREE_OSNAME = "poky"
 OSTREE_INITRAMFS_IMAGE = "initramfs-ostree-image"
-OSTREE_BOOTLOADER = 'u-boot'
+OSTREE_BOOTLOADER ?= 'u-boot'
 
 inherit fullmetalupdate_sota_${MACHINE}
