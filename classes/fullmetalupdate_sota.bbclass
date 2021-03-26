@@ -28,5 +28,3 @@ OSTREE_INITRAMFS_IMAGE = "initramfs-ostree-image"
 OSTREE_BOOTLOADER = 'u-boot'
 
 inherit fullmetalupdate_sota_${MACHINE}
-
-inherit image_repo_manifest
