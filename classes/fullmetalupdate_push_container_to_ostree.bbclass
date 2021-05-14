@@ -46,7 +46,7 @@ do_push_container_to_ostree_and_hawkbit() {
     # Post the newly created container information to hawkbit
     OSTREE_REVPARSE=$(ostree_revparse ${OSTREE_REPO_CONTAINERS} ${OSTREE_PACKAGE_BRANCHNAME})
     # Push the container information to Hawkbit
-    json=$(curl_post "/" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_PACKAGE_BRANCHNAME}'", "description" : "'$OSTREE_PACKAGE_BRANCHNAME'", "type" : "application", "version" : "'$(date +%Y%m%d%H%M)'" } ]')
+    json=$(curl_post "" '[ { "vendor" : "'${HAWKBIT_VENDOR_NAME}'", "name" : "'${OSTREE_PACKAGE_BRANCHNAME}'", "description" : "'$OSTREE_PACKAGE_BRANCHNAME'", "type" : "application", "version" : "'$(date +%Y%m%d%H%M)'" } ]')
     prop='id'
     temp=`echo $json | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w $prop`
     id=$(echo ${temp##*|})
